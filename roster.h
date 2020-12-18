@@ -13,7 +13,7 @@ class Roster {
 	public:
 		void addToRoster(const Employee&); // , deleteFromRoster(Employee&);
 		void deleteFromRoster(roster_it);
-		roster_it findEmployee(std::string input);
+		std::vector<Employee> findEmployee(std::vector<std::string>&);
 		std::vector<Employee> getRoster();
 };
 
