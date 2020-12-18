@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ostream>
 #include <string>
 
 // #include <limits>
@@ -9,9 +10,9 @@
 #include "menu.h"
 
 int main() {
-	printMainMenu();
 	int choice;
 	while (true) {
+		printMainMenu();
 		std::cin >> choice;
 		// std::cin.clear();
 		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -28,7 +29,7 @@ int main() {
 			case 0:
 				return 0;
 			default:
-				std::cout << "Wrong input!";
+				std::cout << "Wrong input!" << std::endl;
 		}
 	}
 }

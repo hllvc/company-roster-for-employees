@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iterator>
+#include <ostream>
 #include <string>
 #include <vector>
 
@@ -14,7 +15,8 @@ void printMainMenu() {
 	std::cout << " 1) New Employee\n";
 	std::cout << " 2) All Employees\n";
 	std::cout << " 3) Delete Employee\n";
-	std::cout << "\n 0) Exit" << std::endl;
+	std::cout << "\n 0) Exit\n" << std::endl;
+	std::cout << "Choice: ";
 }
 
 void newEmployee() {
@@ -25,7 +27,7 @@ void newEmployee() {
 	std::cin >> name;
 	company.employee.setName(name);
 	std::cout << "Surname: ";
-	std::cin >> name;
+	std::cin >> surname;
 	company.employee.setSurname(surname);
 	std::cout << "Age: ";
 	std::cin >> age;
@@ -33,13 +35,19 @@ void newEmployee() {
 	company.roster.addToRoster(company.employee);
 }
 
-void allEmployees() {	
-		printRoster(company.roster.getRoster());
+void allEmployees() {
+	std::cout << "\t" << std::string(5, '*') << " ALL EMPLOYEES " << std::string(5, '*') << std::endl;
+	printRoster(company.roster.getRoster());
 }
 
 void printRoster(std::vector<Employee> roster) {
-	for (auto it = roster.begin(); it != roster.end(); std::advance(it, 1))
-		std::cout << it->getAge();
+	for (auto it = roster.begin(); it != roster.end(); std::advance(it, 1)) {
+		std::cout << std::string(20, '-') << std::endl;
+		std::cout << "Name: " << it->getName() << std::endl;
+		std::cout << "Surname: " << it->getSurname() << std::endl;
+		std::cout << "Age: " << it->getAge() << std::endl;
+		std::cout << std::string(20, '-') << std::endl;
+	}
 }
 
 void deleteEmployee() {
