@@ -5,6 +5,11 @@
 #include <vector>
 #include <sstream>
 
+#include <ios>
+#include <limits>
+
+#include <algorithm>
+
 #include "employee.h"
 #include "roster.h"
 #include "menu.h"
@@ -16,6 +21,7 @@ void printMainMenu() {
 	std::cout << " 1) New Employee\n";
 	std::cout << " 2) All Employees\n";
 	std::cout << " 3) Delete Employee\n";
+	std::cout << " 4) Find Employee\n";
 	std::cout << "\n 0) Exit\n" << std::endl;
 	std::cout << "Choice: ";
 }
@@ -51,25 +57,36 @@ void printRoster(std::vector<Employee> roster) {
 	}
 }
 
-void deleteEmployee() {
-	std::string name;
-	std::cout << "Name: ";
-	std::cin >> name;
-	try {
-		company.roster.deleteFromRoster(company.roster.findEmployee(name));
-	} catch (int e) {
-		if (e == 0)
-			std::cout << "No Match!";
-	}
-}
+// void deleteEmployee() {
+// 	std::string name;
+// 	std::cout << "Name: ";
+// 	std::cin >> name;
+// 	try {
+// 		company.roster.deleteFromRoster();
+// 	} catch (int e) {
+// 		if (e == 0)
+// 			std::cout << "No Match!";
+// 	}
+// }
 
 void findEmployee() {
 	std::string input;
 	std::vector<std::string> split_input;
 	std::cout << "\t" << std::string(5, '*') << " FIND EMPLOYEE " << std::string(5, '*') << "\n\n";
 	std::cout << "Find by Name or Surname or both: ";
-	std::cin >> input;
+	std::cin.ignore();
+	std::getline(std::cin, input, '\n');
+	// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	std::cin.clear();
+	std::cin.sync();
 	split_input = splitInputBySpace(input);
+	try {
+		std::vector<Employee> found_list = company.roster.findEmployee(split_input);
+		printRoster(found_list);
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "No Match Found!" << std::endl;
+	}
 }
 
 std::vector<std::string> splitInputBySpace(std::string& input) {

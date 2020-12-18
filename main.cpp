@@ -24,7 +24,7 @@ int main() {
 				allEmployees();
 				break;
 			case 3:
-				deleteEmployee();
+				// deleteEmployee();
 				break;
 			case 4:
 				findEmployee();

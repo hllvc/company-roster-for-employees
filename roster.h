@@ -1,6 +1,7 @@
 #ifndef _ROSTER_H_
 #define _ROSTER_H_ 
 
+#include <string>
 #include <vector>
 
 #include "employee.h"
