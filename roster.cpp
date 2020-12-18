@@ -1,6 +1,7 @@
-#include "roster.h"
 #include <iterator>
 #include <vector>
+
+#include "roster.h"
 
 void Roster::addToRoster(const Employee& employee) {
 	this->roster.push_back(employee);
@@ -14,9 +15,9 @@ void Roster::deleteFromRoster(roster_it it) {
 	// }
 }
 
-roster_it Roster::findEmployee(std::string name) {
+roster_it Roster::findEmployee(std::string input) {
 	for (auto it = this->roster.begin(); it != this->roster.end(); std::advance(it, 1)) {
-		if (it->getName() == name)
+		if (it->getName() == input)
 			return it;
 	}
 	throw 0;

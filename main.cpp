@@ -26,6 +26,9 @@ int main() {
 			case 3:
 				deleteEmployee();
 				break;
+			case 4:
+				findEmployee();
+				break;
 			case 0:
 				return 0;
 			default:

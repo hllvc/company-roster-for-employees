@@ -2,6 +2,7 @@
 #define _ROSTER_H_ 
 
 #include <vector>
+
 #include "employee.h"
 
 typedef std::vector<Employee>::iterator roster_it;
@@ -12,7 +13,7 @@ class Roster {
 	public:
 		void addToRoster(const Employee&); // , deleteFromRoster(Employee&);
 		void deleteFromRoster(roster_it);
-		roster_it findEmployee(std::string name);
+		roster_it findEmployee(std::string input);
 		std::vector<Employee> getRoster();
 };
 

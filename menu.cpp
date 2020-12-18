@@ -3,6 +3,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "employee.h"
 #include "roster.h"
@@ -60,4 +61,19 @@ void deleteEmployee() {
 		if (e == 0)
 			std::cout << "No Match!";
 	}
+}
+
+void findEmployee() {
+	std::string input;
+	std::vector<std::string> split_input;
+	std::cout << "\t" << std::string(5, '*') << " FIND EMPLOYEE " << std::string(5, '*') << "\n\n";
+	std::cout << "Find by Name or Surname or both: ";
+	std::cin >> input;
+	split_input = splitInputBySpace(input);
+}
+
+std::vector<std::string> splitInputBySpace(std::string& input) {
+	std::istringstream iss(input);
+	std::vector<std::string> results(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
+	return results;
 }
