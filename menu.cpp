@@ -20,12 +20,13 @@
 Company company;
 
 void printMainMenu() {
-	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " MAIN MENU " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
+	std::cout << "\n\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " MAIN MENU " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	std::cout << " " << CHOICE_1 << ") New Employee\n";
 	std::cout << " " << CHOICE_2 << ") All Employees\n";
 	std::cout << " " << CHOICE_3 << ") Delete Employee\n";
 	std::cout << " " << CHOICE_4 << ") Find Employee\n";
 	std::cout << " " << CHOICE_5 << ") Update Employee\n";
+	std::cout << "\n " << CHOICE_H << ") Help\n";
 	std::cout << "\n " << CHOICE_0 << ") Exit\n" << std::endl;
 	std::cout << "Choice: ";
 }
@@ -207,7 +208,7 @@ void subMenu() {
 			case CHOICE_0:
 				return;
 			default:
-				std::cout << "Wrong input!" << std::endl << "You can either enter 1, 2, 3 or 0" << std::endl;
+				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << " or " << CHOICE_0 << "!" << std::endl;
 		}
 		return;
 	}
@@ -218,7 +219,7 @@ void searchMenu() {
 	std::cout << " " << CHOICE_2 << ") Update\n";
 	std::cout << " " << CHOICE_3 << ") New\n";
 	std::cout << "\n " << CHOICE_0 << ") Back\n";
-	std::cout << "\n Choice: ";
+	std::cout << "\nChoice: ";
 }
 
 std::vector<Employee> findEmployee() {
@@ -249,7 +250,7 @@ std::vector<std::string> splitInputBySpace(std::string& input) {
 }
 
 void updateEmployee() {
-	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " UPDATE EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
+	std::cout << "\n\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " UPDATE EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	roster_it it = findByJmbg();
 	std::vector<std::string> input = employeeInput(0);
 	company.roster.updatePerson(it, input);
@@ -266,6 +267,11 @@ void readFiles() {
 	std::vector<std::string> split_input;
 	std::string line;
 	std::ifstream file("roster.dat");
+	if (file.fail()) {
+		std::ofstream file("roster.dat");
+		getHelp();
+		std::cout << "This help is shown this time as it is initial run of programm. For showing help again type character \'" << CHOICE_H << "\' at MAIN MENU! Enyoj." << std::endl;
+	}
 	int age;
 	while (getline (file, line)) {
 		if (line == std::string(LINE_LENGTH, LINE_SIGN))
@@ -287,4 +293,11 @@ void readFiles() {
 			company.roster.addToRoster(employee);
 		}
 	}
+}
+
+void getHelp() {
+	std::ifstream file("README.md");
+	std::string line;
+	while (getline (file, line))
+		std::cout << line << std::endl;
 }

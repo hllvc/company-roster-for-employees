@@ -33,11 +33,14 @@ int main() {
 			case CHOICE_5:
 				updateEmployee();
 				break;
+			case CHOICE_H:
+				getHelp();
+				break;
 			case CHOICE_0:
 				writeFiles();
 				return 0;
 			default:
-				std::cout << "Wrong input!" << std::endl << "You can either enter 1, 2, 3, 4, 5, or 0!" << std::endl;
+				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << ", " << CHOICE_4 << ", " << CHOICE_5 << " or " << CHOICE_0 << "!" << std::endl;
 		}
 	}
 }
