@@ -1,4 +1,5 @@
 #include <iterator>
+#include <string>
 #include <vector>
 
 #include "employee.h"
@@ -60,4 +61,23 @@ roster_it Roster::findEmployee(std::string& jmbg) {
 		if (it->getJmbg() == jmbg)
 			return it;
 	throw 0;
+}
+
+void Roster::updatePerson(roster_it& it, std::string name = "default", std::string surname = "default", int age = 0, std::string department = "default") {
+	if (name == "default")
+		name = it->getName();
+	if (surname == "default")
+		surname = it->getSurname();
+	if (age == 0)
+		it->getAge();
+	if (department == "default")
+		department = it->getDepartment();
+	it->setName(name);
+	it->setSurname(surname);
+	it->setAge(age);
+	it->setDepartment(department);
+}
+
+roster_it Roster::getLast() {
+	return std::prev(this->roster.end());
 }

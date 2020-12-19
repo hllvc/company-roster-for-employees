@@ -30,6 +30,9 @@ int main() {
 			case 4:
 				findEmployeeByNameSurname();
 				break;
+			case 5:
+				updateEmployee();
+				break;
 			case 0:
 				writeFiles();
 				return 0;

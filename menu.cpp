@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iterator>
+#include <ostream>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -23,6 +24,7 @@ void printMainMenu() {
 	std::cout << " 2) All Employees\n";
 	std::cout << " 3) Delete Employee\n";
 	std::cout << " 4) Find Employee\n";
+	std::cout << " 5) Update Employee\n";
 	std::cout << "\n 0) Exit\n" << std::endl;
 	std::cout << "Choice: ";
 }
@@ -77,7 +79,14 @@ bool is_number(const std::string& s) {
 
 void allEmployees() {
 	std::cout << "\t" << std::string(5, '*') << " ALL EMPLOYEES " << std::string(5, '*') << std::endl;
-	printRoster(company.roster.getRoster(), std::cout);
+	std::vector<Employee> roster = company.roster.getRoster();
+	if (!roster.empty()) {
+		printRoster(roster, std::cout);
+		subMenu();
+	} else {
+		std::cout << "Roster is empty!" << std::endl;
+		return;
+	}
 }
 
 void printRoster(std::vector<Employee> roster, std::ostream& output) {
@@ -93,6 +102,11 @@ void printRoster(std::vector<Employee> roster, std::ostream& output) {
 }
 
 void deleteEmployee() {
+	roster_it it = findByJmbg();
+	company.roster.deleteFromRoster(it);
+}
+
+roster_it findByJmbg() {
 	std::string jmbg;
 	std::cout << "JMBG: ";
 	std::cin >> jmbg;
@@ -103,18 +117,52 @@ void deleteEmployee() {
 		if (e == 0)
 			std::cout << "No Match!" << std::endl;
 	}
-	company.roster.deleteFromRoster(it);
+	return it;
 }
 
 void findEmployeeByNameSurname() {
 	std::vector<Employee> list;
 	try {
 		list = findEmployee();
-		printRoster(list, std::cout);
-	} catch (int e) {
+		if (!list.empty()) {
+			printRoster(list, std::cout);
+			subMenu();
+		} else {
+			std::cout << "List is empty!" << std::endl;
+			return;
+		}
+		} catch (int e) {
 		if (e == 0)
 			std::cout << "No Match!" << std::endl;
 	}
+}
+
+void subMenu() {
+	int choice;
+	while (true) {
+		searchMenu();
+		std::cin >> choice;
+		switch (choice) {
+			case 1:
+				deleteEmployee();
+				break;
+			case 2:
+				updateEmployee();
+				break;
+			case 0:
+				return;
+			default:
+				std::cout << "Wrong input!" << std::endl;
+		}
+		return;
+	}
+}
+
+void searchMenu() {
+	std::cout << " 1) Delete\n";
+	std::cout << " 2) Update\n";
+	std::cout << "\n 0) Back\n";
+	std::cout << "\n Choice: ";
 }
 
 std::vector<Employee> findEmployee() {
@@ -142,6 +190,15 @@ std::vector<std::string> splitInputBySpace(std::string& input) {
 	std::istringstream iss(input);
 	std::vector<std::string> results(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
 	return results;
+}
+
+void updateEmployee() {
+	std::cout << "\t" << std::string(5, '*') << " UPDATE EMPLOYEE " << std::string(5, '*') << "\n\n";
+	roster_it it = findByJmbg();
+	newEmployee();
+	roster_it it_2 = company.roster.getLast();
+	company.roster.updatePerson(it, it_2->getName(), it_2->getSurname(), it_2->getAge(), it_2->getDepartment());
+	company.roster.deleteFromRoster(it_2);
 }
 
 void writeFiles() {

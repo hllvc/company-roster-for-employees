@@ -14,10 +14,12 @@ class Roster {
 	public:
 		void addToRoster(const Employee&); // , deleteFromRoster(Employee&);
 		void deleteFromRoster(roster_it&);
+		void updatePerson(roster_it&, std::string, std::string, int, std::string);
 		std::vector<Employee> findEmployees(std::vector<std::string>&);
 		roster_it findEmployee(std::string&);
 		std::vector<Employee> getRoster();
 		bool checkJMBG(std::string&);
+		roster_it getLast();
 };
 
 #endif // _ROSTER_H_

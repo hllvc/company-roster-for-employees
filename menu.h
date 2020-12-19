@@ -16,6 +16,9 @@ void newEmployee();
 void allEmployees();
 void deleteEmployee();
 void findEmployeeByNameSurname();
+void updateEmployee();
+void searchMenu();
+void subMenu();
 // additional functions
 void printRoster(std::vector<Employee>, std::ostream&);
 std::vector<Employee> findEmployee();
@@ -24,3 +27,4 @@ std::string jmbgInput();
 bool is_number(const std::string&);
 void writeFiles();
 void readFiles();
+roster_it findByJmbg();
