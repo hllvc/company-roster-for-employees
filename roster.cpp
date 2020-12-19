@@ -5,6 +5,10 @@
 #include "employee.h"
 #include "roster.h"
 
+Roster::Roster() {};
+
+Roster::~Roster() {};
+
 void Roster::addToRoster(const Employee& employee) {
 	this->roster.push_back(employee);
 }
@@ -63,19 +67,16 @@ roster_it Roster::findEmployee(std::string& jmbg) {
 	throw 0;
 }
 
-void Roster::updatePerson(roster_it& it, std::string name = "default", std::string surname = "default", int age = 0, std::string department = "default") {
-	if (name == "default")
-		name = it->getName();
-	if (surname == "default")
-		surname = it->getSurname();
-	if (age == 0)
-		it->getAge();
-	if (department == "default")
-		department = it->getDepartment();
-	it->setName(name);
-	it->setSurname(surname);
-	it->setAge(age);
-	it->setDepartment(department);
+void Roster::updatePerson(roster_it& it, std::vector<std::string>& input) {
+	if (input.at(0) != "0")
+		it->setName(input.at(0));
+	if (input.at(1) != "0")
+		it->setSurname(input.at(1));
+	if (input.at(2) != "0")
+		it->setAge(std::stoi(input.at(2)));
+	if (input.at(3) != "0")
+		it->setDepartment(input.at(3));
+	return;
 }
 
 roster_it Roster::getLast() {

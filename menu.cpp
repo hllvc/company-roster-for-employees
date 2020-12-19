@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -30,30 +31,59 @@ void printMainMenu() {
 }
 
 void newEmployee() {
-	std::string name, surname, jmbg, department;
+	// std::string name, surname, jmbg, department;
 	int age;
-
-	std::cout << "Name: ";
-	std::cin >> name;
-	company.employee.setName(name);
-	std::cout << "Surname: ";
-	std::cin >> surname;
-	company.employee.setSurname(surname);
-	std::cout << "Age: ";
-	std::cin >> age;
-	company.employee.setAge(age);
-	std::cout << "JMBG: ";
-	try {
-		jmbg = jmbgInput();	
-	} catch (int e) {
-		if (e == 0)
-			std::cout << "Some error occured. Try again!" << std::endl;
-	}
-	company.employee.setJmbg(jmbg);
-	std::cout << "Department: ";
-	std::cin >> department;
-	company.employee.setDepartment(department);
+	// std::cout << "Name: ";
+	// std::cin >> name;
+	// std::cout << "Surname: ";
+	// std::cin >> surname;
+	// std::cout << "Age: ";
+	// std::cin >> age;
+	// std::cout << "JMBG: ";
+	// try {
+	// 	jmbg = jmbgInput();	
+	// } catch (int e) {
+	// 	if (e == 0)
+	// 		std::cout << "Some error occured. Try again!" << std::endl;
+	// }
+	// std::cout << "Department: ";
+	// std::cin >> department;
+	std::vector<std::string> input = employeeInput(1);
+	age = std::stoi(input.at(2));
+	company.employee = Employee(input.at(0), input.at(1), age, input.at(3), input.at(4));
 	company.roster.addToRoster(company.employee);
+}
+
+std::vector<std::string> employeeInput(const int& value) {
+	std::string s_input;
+	std::vector<std::string> input;
+	std::cout << "Name: ";
+	std::cin >> s_input;
+	input.push_back(s_input);
+	std::cout << "Surname: ";
+	std::cin >> s_input;
+	input.push_back(s_input);
+	std::cout << "Age: ";
+	s_input = ageInput();
+	input.push_back(s_input);
+	if (value == 1){
+		std::cout << "JMBG: ";
+		try {
+			s_input = jmbgInput();	
+			input.push_back(s_input);
+		} catch (int e) {
+			if (e == 0)
+				std::cout << "Some error occured. Try again!" << std::endl;
+		}
+	}
+	std::cout << "Department: ";
+	std::cin.ignore();
+	std::getline(std::cin, s_input, '\n');
+	std::cin.clear();
+	std::cin.sync();
+	// std::cin >> s_input;
+	input.push_back(s_input);
+	return input;
 }
 
 std::string jmbgInput() {
@@ -69,6 +99,19 @@ std::string jmbgInput() {
 				std::cout << "JMBG is all digits!" << std::endl;
 		} else
 			std::cout << "JMBG must be 13 numbers!" << std::endl;
+	}
+	throw 0;
+}
+
+std::string ageInput() {
+	int age;
+	while (std::cin >> age){
+		if (age <= 0 || age >= 150)
+			std::cout << "Please enter your real age!" << std::endl;
+		else if (age < 18 && age > 0)
+			std::cout << "Your are underage!" <<	std::endl;
+		else
+			return std::to_string(age);
 	}
 	throw 0;
 }
@@ -149,6 +192,8 @@ void subMenu() {
 			case 2:
 				updateEmployee();
 				break;
+			case 3:
+				newEmployee();
 			case 0:
 				return;
 			default:
@@ -161,6 +206,7 @@ void subMenu() {
 void searchMenu() {
 	std::cout << " 1) Delete\n";
 	std::cout << " 2) Update\n";
+	std::cout << " 3) New\n";
 	std::cout << "\n 0) Back\n";
 	std::cout << "\n Choice: ";
 }
@@ -195,10 +241,8 @@ std::vector<std::string> splitInputBySpace(std::string& input) {
 void updateEmployee() {
 	std::cout << "\t" << std::string(5, '*') << " UPDATE EMPLOYEE " << std::string(5, '*') << "\n\n";
 	roster_it it = findByJmbg();
-	newEmployee();
-	roster_it it_2 = company.roster.getLast();
-	company.roster.updatePerson(it, it_2->getName(), it_2->getSurname(), it_2->getAge(), it_2->getDepartment());
-	company.roster.deleteFromRoster(it_2);
+	std::vector<std::string> input = employeeInput(0);
+	company.roster.updatePerson(it, input);
 }
 
 void writeFiles() {
@@ -227,6 +271,8 @@ void readFiles() {
 		} else if (split_input.at(0) == "JMBG:")
 			employee.setJmbg(split_input.at(1));
 		else if (split_input.at(0) == "Department:") {
+			for (auto it = split_input.begin() + 2; it != split_input.end(); std::advance(it, 1))
+				split_input.at(1) += " " + *it;
 			employee.setDepartment(split_input.at(1));
 			company.roster.addToRoster(employee);
 		}

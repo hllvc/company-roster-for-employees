@@ -10,8 +10,10 @@ class Employee {
 		std::string jmbg;
 		std::string department;
 		int age;
-		
 	public:
+		Employee();
+		Employee(std::string&, std::string&, int&, std::string& jmbg, std::string& department);
+		~Employee();
 		void setName(std::string);
 		void setSurname(std::string);
 		void setAge(int);

@@ -28,3 +28,5 @@ bool is_number(const std::string&);
 void writeFiles();
 void readFiles();
 roster_it findByJmbg();
+std::vector<std::string> employeeInput(const int&);
+std::string ageInput();

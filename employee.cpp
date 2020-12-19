@@ -1,6 +1,19 @@
 #include <iostream>
 #include <string>
+
 #include "employee.h"
+
+Employee::Employee() {}
+
+Employee::Employee(std::string& name, std::string& surname, int& age, std::string& jmbg, std::string& department) {
+	setName(name);
+	setSurname(surname);
+	setAge(age);
+	setJmbg(jmbg);
+	setDepartment(department);
+}
+
+Employee::~Employee() {};
 
 void Employee::setName(std::string name) {
 	this->name = name;
