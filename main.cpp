@@ -30,6 +30,7 @@ int main() {
 				findEmployeeByNameSurname();
 				break;
 			case 0:
+				writeFiles();
 				return 0;
 			default:
 				std::cout << "Wrong input!" << std::endl;

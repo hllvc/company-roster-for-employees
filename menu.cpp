@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iterator>
-#include <ostream>
 #include <string>
 #include <vector>
 #include <sstream>
@@ -9,6 +8,8 @@
 #include <limits>
 
 #include <algorithm>
+
+#include <fstream>
 
 #include "employee.h"
 #include "roster.h"
@@ -76,18 +77,18 @@ bool is_number(const std::string& s) {
 
 void allEmployees() {
 	std::cout << "\t" << std::string(5, '*') << " ALL EMPLOYEES " << std::string(5, '*') << std::endl;
-	printRoster(company.roster.getRoster());
+	printRoster(company.roster.getRoster(), std::cout);
 }
 
-void printRoster(std::vector<Employee> roster) {
+void printRoster(std::vector<Employee> roster, std::ostream& output) {
 	for (auto it = roster.begin(); it != roster.end(); std::advance(it, 1)) {
-		std::cout << std::string(20, '-') << std::endl;
-		std::cout << "Name: " << it->getName() << std::endl;
-		std::cout << "Surname: " << it->getSurname() << std::endl;
-		std::cout << "Age: " << it->getAge() << std::endl;
-		std::cout << "JMBG: " << it->getJmbg() << std::endl;
-		std::cout << "Department: " << it->getDepartment() << std::endl;
-		std::cout << std::string(20, '-') << std::endl;
+		output << std::string(20, '-') << std::endl;
+		output << "Name: " << it->getName() << std::endl;
+		output << "Surname: " << it->getSurname() << std::endl;
+		output << "Age: " << it->getAge() << std::endl;
+		output << "JMBG: " << it->getJmbg() << std::endl;
+		output << "Department: " << it->getDepartment() << std::endl;
+		output << std::string(20, '-') << std::endl;
 	}
 }
 
@@ -109,7 +110,7 @@ void findEmployeeByNameSurname() {
 	std::vector<Employee> list;
 	try {
 		list = findEmployee();
-		printRoster(list);
+		printRoster(list, std::cout);
 	} catch (int e) {
 		if (e == 0)
 			std::cout << "No Match!" << std::endl;
@@ -141,4 +142,10 @@ std::vector<std::string> splitInputBySpace(std::string& input) {
 	std::istringstream iss(input);
 	std::vector<std::string> results(std::istream_iterator<std::string>{iss}, std::istream_iterator<std::string>());
 	return results;
+}
+
+void writeFiles() {
+	std::ofstream file("roster.dat");
+	std::vector<Employee> roster = company.roster.getRoster();
+	printRoster(roster, file);
 }
