@@ -18,22 +18,22 @@ int main() {
 		// std::cin.clear();
 		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		switch (choice) {
-			case choice_1:
+			case CHOICE_1:
 				newEmployee();
 				break;
-			case choice_2:
+			case CHOICE_2:
 				allEmployees();
 				break;
-			case choice_3:
+			case CHOICE_3:
 				deleteEmployee();
 				break;
-			case choice_4:
+			case CHOICE_4:
 				findEmployeeByNameSurname();
 				break;
-			case choice_5:
+			case CHOICE_5:
 				updateEmployee();
 				break;
-			case choice_0:
+			case CHOICE_0:
 				writeFiles();
 				return 0;
 			default:
