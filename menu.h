@@ -18,6 +18,9 @@ const int LINE_LENGTH = 20;
 const char SIGN_AROUND_NAME = '*';
 const char LINE_SIGN = '-';
 
+const int MINIMAL_AGE = 18;
+const int MAX_AGE = 150;
+
 struct Company {
 	Employee employee;
 	Roster roster;

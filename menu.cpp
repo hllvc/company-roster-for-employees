@@ -116,9 +116,9 @@ std::string jmbgInput() {
 std::string ageInput() {
 	int age;
 	while (std::cin >> age){
-		if (age <= 0 || age >= 150)
+		if (age <= 0 || age >= MAX_AGE)
 			std::cout << "Please enter your real age!" << std::endl;
-		else if (age < 18 && age > 0)
+		else if (age < MINIMAL_AGE && age > 0)
 			std::cout << "Your are underage!" <<	std::endl;
 		else
 			return std::to_string(age);
@@ -144,13 +144,13 @@ void allEmployees() {
 
 void printRoster(std::vector<Employee> roster, std::ostream& output) {
 	for (auto it = roster.begin(); it != roster.end(); std::advance(it, 1)) {
-		output << std::string(20, '-') << std::endl;
+		output << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 		output << "Name: " << it->getName() << std::endl;
 		output << "Surname: " << it->getSurname() << std::endl;
 		output << "Age: " << it->getAge() << std::endl;
 		output << "JMBG: " << it->getJmbg() << std::endl;
 		output << "Department: " << it->getDepartment() << std::endl;
-		output << std::string(20, '-') << std::endl;
+		output << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 	}
 }
 
@@ -202,9 +202,9 @@ void subMenu() {
 			case CHOICE_2:
 				updateEmployee();
 				break;
-			case choice_3:
+			case CHOICE_3:
 				newEmployee();
-			case choice_0:
+			case CHOICE_0:
 				return;
 			default:
 				std::cout << "Wrong input!" << std::endl << "You can either enter 1, 2, 3 or 0" << std::endl;
@@ -268,7 +268,7 @@ void readFiles() {
 	std::ifstream file("roster.dat");
 	int age;
 	while (getline (file, line)) {
-		if (line == std::string(20, '-'))
+		if (line == std::string(LINE_LENGTH, LINE_SIGN))
 			continue;
 		split_input = splitInputBySpace(line);	
 		if (split_input.at(0) == "Name:")
