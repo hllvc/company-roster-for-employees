@@ -5,6 +5,19 @@
 #include "employee.h"
 #include "roster.h"
 
+const char CHOICE_1 = '1';
+const char CHOICE_2 = '2';
+const char CHOICE_3 = '3';
+const char CHOICE_4 = '4';
+const char CHOICE_5 = '5';
+const char CHOICE_0 = '0';
+
+const int SIGN_AROUND_NAME_NUMBER = 5;
+const int LINE_LENGTH = 20;
+
+const char SIGN_AROUND_NAME = '*';
+const char LINE_SIGN = '-';
+
 struct Company {
 	Employee employee;
 	Roster roster;
@@ -30,3 +43,4 @@ void readFiles();
 roster_it findByJmbg();
 std::vector<std::string> employeeInput(const int&);
 std::string ageInput();
+char choiceInput();

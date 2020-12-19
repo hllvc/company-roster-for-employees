@@ -11,33 +11,33 @@
 
 int main() {
 	readFiles();
-	int choice;
+	char choice;
 	while (true) {
 		printMainMenu();
-		std::cin >> choice;
+		choice = choiceInput();
 		// std::cin.clear();
 		// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		switch (choice) {
-			case 1:
+			case choice_1:
 				newEmployee();
 				break;
-			case 2:
+			case choice_2:
 				allEmployees();
 				break;
-			case 3:
+			case choice_3:
 				deleteEmployee();
 				break;
-			case 4:
+			case choice_4:
 				findEmployeeByNameSurname();
 				break;
-			case 5:
+			case choice_5:
 				updateEmployee();
 				break;
-			case 0:
+			case choice_0:
 				writeFiles();
 				return 0;
 			default:
-				std::cout << "Wrong input!" << std::endl;
+				std::cout << "Wrong input!" << std::endl << "You can either enter 1, 2, 3, 4, 5, or 0!" << std::endl;
 		}
 	}
 }

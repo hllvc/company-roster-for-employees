@@ -20,14 +20,24 @@
 Company company;
 
 void printMainMenu() {
-	std::cout << "\t" << std::string(5, '*') << " MAIN MENU " << std::string(5, '*') << "\n\n";
-	std::cout << " 1) New Employee\n";
-	std::cout << " 2) All Employees\n";
-	std::cout << " 3) Delete Employee\n";
-	std::cout << " 4) Find Employee\n";
-	std::cout << " 5) Update Employee\n";
-	std::cout << "\n 0) Exit\n" << std::endl;
+	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " MAIN MENU " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
+	std::cout << " " << CHOICE_1 << ") New Employee\n";
+	std::cout << " " << CHOICE_2 << ") All Employees\n";
+	std::cout << " " << CHOICE_3 << ") Delete Employee\n";
+	std::cout << " " << CHOICE_4 << ") Find Employee\n";
+	std::cout << " " << CHOICE_5 << ") Update Employee\n";
+	std::cout << "\n " << CHOICE_0 << ") Exit\n" << std::endl;
 	std::cout << "Choice: ";
+}
+
+char choiceInput() {
+	std::string choice;
+	while (std::cin >> choice) {
+		if (choice.size() > 1)
+			return 'e';
+		else return choice.at(0);
+	}
+	throw 0;
 }
 
 void newEmployee() {
@@ -121,7 +131,7 @@ bool is_number(const std::string& s) {
 }
 
 void allEmployees() {
-	std::cout << "\t" << std::string(5, '*') << " ALL EMPLOYEES " << std::string(5, '*') << std::endl;
+	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " ALL EMPLOYEES " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << std::endl;
 	std::vector<Employee> roster = company.roster.getRoster();
 	if (!roster.empty()) {
 		printRoster(roster, std::cout);
@@ -181,33 +191,33 @@ void findEmployeeByNameSurname() {
 }
 
 void subMenu() {
-	int choice;
+	char choice;
 	while (true) {
 		searchMenu();
-		std::cin >> choice;
+		choice = choiceInput();
 		switch (choice) {
-			case 1:
+			case CHOICE_1:
 				deleteEmployee();
 				break;
-			case 2:
+			case CHOICE_2:
 				updateEmployee();
 				break;
-			case 3:
+			case choice_3:
 				newEmployee();
-			case 0:
+			case choice_0:
 				return;
 			default:
-				std::cout << "Wrong input!" << std::endl;
+				std::cout << "Wrong input!" << std::endl << "You can either enter 1, 2, 3 or 0" << std::endl;
 		}
 		return;
 	}
 }
 
 void searchMenu() {
-	std::cout << " 1) Delete\n";
-	std::cout << " 2) Update\n";
-	std::cout << " 3) New\n";
-	std::cout << "\n 0) Back\n";
+	std::cout << " " << CHOICE_1 << ") Delete\n";
+	std::cout << " " << CHOICE_2 << ") Update\n";
+	std::cout << " " << CHOICE_3 << ") New\n";
+	std::cout << "\n " << CHOICE_0 << ") Back\n";
 	std::cout << "\n Choice: ";
 }
 
@@ -215,7 +225,7 @@ std::vector<Employee> findEmployee() {
 	std::string input;
 	std::vector<std::string> split_input;
 	std::vector<Employee> list;
-	std::cout << "\t" << std::string(5, '*') << " FIND EMPLOYEE " << std::string(5, '*') << "\n\n";
+	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " FIND EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	std::cout << "Find by Name or Surname or both: ";
 	std::cin.ignore();
 	std::getline(std::cin, input, '\n');
@@ -239,7 +249,7 @@ std::vector<std::string> splitInputBySpace(std::string& input) {
 }
 
 void updateEmployee() {
-	std::cout << "\t" << std::string(5, '*') << " UPDATE EMPLOYEE " << std::string(5, '*') << "\n\n";
+	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " UPDATE EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	roster_it it = findByJmbg();
 	std::vector<std::string> input = employeeInput(0);
 	company.roster.updatePerson(it, input);
