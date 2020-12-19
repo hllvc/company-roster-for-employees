@@ -13,9 +13,11 @@ class Roster {
 		std::vector<Employee> roster;
 	public:
 		void addToRoster(const Employee&); // , deleteFromRoster(Employee&);
-		void deleteFromRoster(roster_it);
+		void deleteFromRoster(roster_it&);
 		std::vector<Employee> findEmployee(std::vector<std::string>&);
+		roster_it findEmployee(std::string&);
 		std::vector<Employee> getRoster();
+		bool checkJMBG(std::string&);
 };
 
 #endif // _ROSTER_H_

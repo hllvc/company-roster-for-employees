@@ -24,10 +24,10 @@ int main() {
 				allEmployees();
 				break;
 			case 3:
-				// deleteEmployee();
+				deleteEmployee();
 				break;
 			case 4:
-				findEmployee();
+				findEmployeeByNameSurname();
 				break;
 			case 0:
 				return 0;

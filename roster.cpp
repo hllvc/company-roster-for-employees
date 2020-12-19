@@ -8,12 +8,8 @@ void Roster::addToRoster(const Employee& employee) {
 	this->roster.push_back(employee);
 }
 
-void Roster::deleteFromRoster(roster_it it) {
+void Roster::deleteFromRoster(roster_it& it) {	
 	it = this->roster.erase(it);
-	// for (auto it = this->roster.begin(); it != this->roster.end(); std::advance(it, 1)) {
-	// 	if (employee.getName() == it->getName())
-	// 		it = this->roster.erase(it);
-	// }
 }
 
 std::vector<Employee> Roster::findEmployee(std::vector<std::string>& split_input) {
@@ -50,4 +46,18 @@ std::vector<Employee> Roster::findEmployee(std::vector<std::string>& split_input
 
 std::vector<Employee> Roster::getRoster() {
 	return this->roster;
+}
+
+bool Roster::checkJMBG(std::string& jmbg) {
+	for (auto it = this->roster.begin(); it != this->roster.end(); std::advance(it, 1))
+		if (it->getJmbg() == jmbg)
+			return false;
+	return true;
+}
+
+roster_it Roster::findEmployee(std::string& jmbg) {
+	for (auto it = this->roster.begin(); it != this->roster.end(); std::advance(it, 1))
+		if (it->getJmbg() == jmbg)
+			return it;
+	throw 0;
 }

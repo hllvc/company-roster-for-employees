@@ -16,6 +16,10 @@ void Employee::setAge(int age) {
 	this->age = age;
 }
 
+void Employee::setJmbg(std::string jmbg) {
+	this->jmbg = jmbg;
+}
+
 std::string Employee::getName() {
 	return this->name;
 }
@@ -26,4 +30,8 @@ std::string Employee::getSurname() {
 
 int Employee::getAge() {
 	return this->age;
+}
+
+std::string Employee::getJmbg() {
+	return this->jmbg;
 }

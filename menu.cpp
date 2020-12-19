@@ -27,7 +27,7 @@ void printMainMenu() {
 }
 
 void newEmployee() {
-	std::string name, surname;
+	std::string name, surname, jmbg;
 	int age;
 
 	std::cout << "Name: ";
@@ -39,7 +39,29 @@ void newEmployee() {
 	std::cout << "Age: ";
 	std::cin >> age;
 	company.employee.setAge(age);
+	std::cout << "JMBG: ";
+	try {
+		jmbg = jmbgInput();	
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "Some error occured. Try again!" << std::endl;
+	}
+	company.employee.setJmbg(jmbg);
 	company.roster.addToRoster(company.employee);
+}
+
+std::string jmbgInput() {
+	std::string jmbg;
+	while (std::cin >> jmbg) {
+		if (jmbg.size() == 13) {
+			if (company.roster.checkJMBG(jmbg))
+				return jmbg;
+			else
+				std::cout << "JMBG already exist. Enter new one!" << std::endl;
+		} else
+			std::cout << "JMBG must be 13 numbers!" << std::endl;
+	}
+	throw 0;
 }
 
 void allEmployees() {
@@ -53,25 +75,40 @@ void printRoster(std::vector<Employee> roster) {
 		std::cout << "Name: " << it->getName() << std::endl;
 		std::cout << "Surname: " << it->getSurname() << std::endl;
 		std::cout << "Age: " << it->getAge() << std::endl;
+		std::cout << "JMBG: " << it->getJmbg() << std::endl;
 		std::cout << std::string(20, '-') << std::endl;
 	}
 }
 
-// void deleteEmployee() {
-// 	std::string name;
-// 	std::cout << "Name: ";
-// 	std::cin >> name;
-// 	try {
-// 		company.roster.deleteFromRoster();
-// 	} catch (int e) {
-// 		if (e == 0)
-// 			std::cout << "No Match!";
-// 	}
-// }
+void deleteEmployee() {
+	std::string jmbg;
+	std::cout << "JMBG: ";
+	std::cin >> jmbg;
+	roster_it it;
+	try {
+		it = company.roster.findEmployee(jmbg);
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "No Match!" << std::endl;
+	}
+	company.roster.deleteFromRoster(it);
+}
 
-void findEmployee() {
+void findEmployeeByNameSurname() {
+	std::vector<Employee> list;
+	try {
+		list = findEmployee();
+		printRoster(list);
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "No Match!" << std::endl;
+	}
+}
+
+std::vector<Employee> findEmployee() {
 	std::string input;
 	std::vector<std::string> split_input;
+	std::vector<Employee> list;
 	std::cout << "\t" << std::string(5, '*') << " FIND EMPLOYEE " << std::string(5, '*') << "\n\n";
 	std::cout << "Find by Name or Surname or both: ";
 	std::cin.ignore();
@@ -81,12 +118,12 @@ void findEmployee() {
 	std::cin.sync();
 	split_input = splitInputBySpace(input);
 	try {
-		std::vector<Employee> found_list = company.roster.findEmployee(split_input);
-		printRoster(found_list);
+		list = company.roster.findEmployee(split_input);
 	} catch (int e) {
 		if (e == 0)
-			std::cout << "No Match Found!" << std::endl;
+			throw 0;
 	}
+	return list;
 }
 
 std::vector<std::string> splitInputBySpace(std::string& input) {
