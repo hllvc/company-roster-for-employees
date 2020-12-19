@@ -149,3 +149,29 @@ void writeFiles() {
 	std::vector<Employee> roster = company.roster.getRoster();
 	printRoster(roster, file);
 }
+
+void readFiles() {
+	Employee employee;
+	std::vector<std::string> split_input;
+	std::string line;
+	std::ifstream file("roster.dat");
+	int age;
+	while (getline (file, line)) {
+		if (line == std::string(20, '-'))
+			continue;
+		split_input = splitInputBySpace(line);	
+		if (split_input.at(0) == "Name:")
+			employee.setName(split_input.at(1));
+		else if (split_input.at(0) == "Surname:")
+			employee.setSurname(split_input.at(1));
+		else if (split_input.at(0) == "Age:") {
+			age = stoi(split_input.at(1));
+			employee.setAge(age);
+		} else if (split_input.at(0) == "JMBG:")
+			employee.setJmbg(split_input.at(1));
+		else if (split_input.at(0) == "Department:") {
+			employee.setDepartment(split_input.at(1));
+			company.roster.addToRoster(employee);
+		}
+	}
+}

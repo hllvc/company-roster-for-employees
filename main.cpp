@@ -10,6 +10,7 @@
 #include "menu.h"
 
 int main() {
+	readFiles();
 	int choice;
 	while (true) {
 		printMainMenu();
