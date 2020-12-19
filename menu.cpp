@@ -27,7 +27,7 @@ void printMainMenu() {
 }
 
 void newEmployee() {
-	std::string name, surname, jmbg;
+	std::string name, surname, jmbg, department;
 	int age;
 
 	std::cout << "Name: ";
@@ -47,6 +47,9 @@ void newEmployee() {
 			std::cout << "Some error occured. Try again!" << std::endl;
 	}
 	company.employee.setJmbg(jmbg);
+	std::cout << "Department: ";
+	std::cin >> department;
+	company.employee.setDepartment(department);
 	company.roster.addToRoster(company.employee);
 }
 
@@ -54,14 +57,21 @@ std::string jmbgInput() {
 	std::string jmbg;
 	while (std::cin >> jmbg) {
 		if (jmbg.size() == 13) {
-			if (company.roster.checkJMBG(jmbg))
-				return jmbg;
-			else
-				std::cout << "JMBG already exist. Enter new one!" << std::endl;
+			if (is_number(jmbg)) {
+				if (company.roster.checkJMBG(jmbg))
+					return jmbg;
+				else
+					std::cout << "JMBG already exist. Enter new one!" << std::endl;
+			} else
+				std::cout << "JMBG is all digits!" << std::endl;
 		} else
 			std::cout << "JMBG must be 13 numbers!" << std::endl;
 	}
 	throw 0;
+}
+
+bool is_number(const std::string& s) {
+    return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end();
 }
 
 void allEmployees() {
@@ -76,6 +86,7 @@ void printRoster(std::vector<Employee> roster) {
 		std::cout << "Surname: " << it->getSurname() << std::endl;
 		std::cout << "Age: " << it->getAge() << std::endl;
 		std::cout << "JMBG: " << it->getJmbg() << std::endl;
+		std::cout << "Department: " << it->getDepartment() << std::endl;
 		std::cout << std::string(20, '-') << std::endl;
 	}
 }
@@ -118,7 +129,7 @@ std::vector<Employee> findEmployee() {
 	std::cin.sync();
 	split_input = splitInputBySpace(input);
 	try {
-		list = company.roster.findEmployee(split_input);
+		list = company.roster.findEmployees(split_input);
 	} catch (int e) {
 		if (e == 0)
 			throw 0;

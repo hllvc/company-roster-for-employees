@@ -19,3 +19,4 @@ void printRoster(std::vector<Employee>);
 std::vector<Employee> findEmployee();
 std::vector<std::string> splitInputBySpace(std::string&);
 std::string jmbgInput();
+bool is_number(const std::string&);

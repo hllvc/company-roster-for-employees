@@ -12,7 +12,7 @@ void Roster::deleteFromRoster(roster_it& it) {
 	it = this->roster.erase(it);
 }
 
-std::vector<Employee> Roster::findEmployee(std::vector<std::string>& split_input) {
+std::vector<Employee> Roster::findEmployees(std::vector<std::string>& split_input) {
 	std::vector<Employee> by_names;
 	std::vector<Employee> by_surnames;
 	std::vector<Employee> result;

@@ -2,8 +2,6 @@
 #include <string>
 #include "employee.h"
 
-
-
 void Employee::setName(std::string name) {
 	this->name = name;
 }
@@ -20,6 +18,10 @@ void Employee::setJmbg(std::string jmbg) {
 	this->jmbg = jmbg;
 }
 
+void Employee::setDepartment(std::string department) {
+	this->department = department;
+}
+
 std::string Employee::getName() {
 	return this->name;
 }
@@ -34,4 +36,8 @@ int Employee::getAge() {
 
 std::string Employee::getJmbg() {
 	return this->jmbg;
+}
+
+std::string Employee::getDepartment() {
+	return this->department;
 }
