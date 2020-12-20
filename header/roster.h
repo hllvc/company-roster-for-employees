@@ -21,7 +21,6 @@ class Roster {
 		roster_it findEmployee(std::string&);
 		std::vector<Employee> getRoster();
 		bool checkJMBG(std::string&);
-		roster_it getLast();
 		void clearRoster();
 };
 

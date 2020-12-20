@@ -79,10 +79,6 @@ void Roster::updatePerson(roster_it& it, std::vector<std::string>& input) {
 	return;
 }
 
-roster_it Roster::getLast() {
-	return std::prev(this->roster.end());
-}
-
 void Roster::clearRoster() {
 	this->roster.clear();
 }

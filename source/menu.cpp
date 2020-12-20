@@ -100,23 +100,7 @@ char choiceInput() {
 }
 
 void newEmployee() {
-	// std::string name, surname, jmbg, department;
 	int age;
-	// std::cout << "Name: ";
-	// std::cin >> name;
-	// std::cout << "Surname: ";
-	// std::cin >> surname;
-	// std::cout << "Age: ";
-	// std::cin >> age;
-	// std::cout << "JMBG: ";
-	// try {
-	// 	jmbg = jmbgInput();	
-	// } catch (int e) {
-	// 	if (e == 0)
-	// 		std::cout << "Some error occured. Try again!" << std::endl;
-	// }
-	// std::cout << "Department: ";
-	// std::cin >> department;
 	std::vector<std::string> input = employeeInput(1);
 	age = std::stoi(input.at(2));
 	company.employee = Employee(input.at(0), input.at(1), age, input.at(3), input.at(4));
@@ -336,7 +320,6 @@ std::vector<Employee> findEmployee() {
 	std::cout << "Find by Name or Surname or both: ";
 	std::cin.ignore();
 	std::getline(std::cin, input, '\n');
-	// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	std::cin.clear();
 	std::cin.sync();
 	split_input = splitInputBySpace(input);
