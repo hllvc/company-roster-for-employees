@@ -24,7 +24,8 @@ void printMainMenu() {
 	std::cout << " " << CHOICE_1 << ") New Employee\n";
 	std::cout << " " << CHOICE_2 << ") All Employees\n";
 	std::cout << " " << CHOICE_3 << ") Find Employee\n";
-	std::cout << "\n " << CHOICE_H << ") Help\n";
+	std::cout << "\n " << CHOICE_C << ") Clear Roster\n";
+	std::cout << " " << CHOICE_H << ") Help\n";
 	std::cout << "\n " << CHOICE_0 << ") Exit\n" << std::endl;
 	std::cout << "Choice: ";
 }
@@ -44,6 +45,9 @@ void mainMenu() {
 			case CHOICE_3:
 				findEmployeeByNameSurname();
 				break;
+			case CHOICE_C:
+				resetAllSettings();
+				break;
 			case CHOICE_H:
 				getHelp();
 				break;
@@ -54,6 +58,34 @@ void mainMenu() {
 				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << ", " << CHOICE_4 << ", " << CHOICE_5 << " or " << CHOICE_0 << "!" << std::endl;
 		}
 	}
+}
+
+void resetAllSettings() {
+	std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
+	std::cout << "Are you sure to continue? (Y/n): ";
+	char choice;
+	try {
+		choice = yesNoChoice();
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "Some error occured! Try again!" << std::endl;
+	}
+	if (choice == 'Y') {
+		company.roster.clearRoster();
+		writeFiles();
+	}
+	return;
+}
+
+char yesNoChoice() {
+	char choice;
+	while (std::cin >> choice) {
+		if (choice == 'Y' || choice == 'n')
+			return choice;
+		else
+			std::cout << "Not and option! Try again: ";
+	}
+	throw 0;
 }
 
 char choiceInput() {
@@ -100,9 +132,15 @@ std::vector<std::string> employeeInput(const int& value) {
 	std::cout << "Surname: ";
 	std::cin >> s_input;
 	input.push_back(s_input);
-	std::cout << "Age: ";
-	s_input = ageInput();
-	input.push_back(s_input);
+	try {
+		std::cout << "Age: ";
+		s_input = ageInput();
+		input.push_back(s_input);
+
+	} catch (int e) {
+		if (e == 0)
+			std::cout << "Some error occured. Try again!" << std::endl;
+	}
 	if (value == 1){
 		std::cout << "JMBG: ";
 		try {
@@ -132,24 +170,29 @@ std::string jmbgInput() {
 				if (company.roster.checkJMBG(jmbg))
 					return jmbg;
 				else
-					std::cout << "JMBG already exist. Enter new one!" << std::endl;
+					std::cout << "JMBG already exist. Try again: ";
 			} else
-				std::cout << "JMBG is all digits!" << std::endl;
+				std::cout << "JMBG is all digits! Try again: ";
 		} else
-			std::cout << "JMBG must be 13 numbers!" << std::endl;
+			std::cout << "JMBG must be 13 numbers! Try again: ";
 	}
 	throw 0;
 }
 
 std::string ageInput() {
+	std::string input;
 	int age;
-	while (std::cin >> age){
-		if (age <= 0 || age >= MAX_AGE)
-			std::cout << "Please enter your real age!" << std::endl;
-		else if (age < MINIMAL_AGE && age > 0)
-			std::cout << "Your are underage!" <<	std::endl;
-		else
-			return std::to_string(age);
+	while (std::cin >> input){
+		if (is_number(input)) {
+			age = std::stoi(input);
+			if (age <= 0 || age >= MAX_AGE)
+				std::cout << "Please enter your real age: ";
+			else if (age < MINIMAL_AGE && age > 0)
+				std::cout << "Your are underage! Try again: ";
+			else
+				return input;
+		} else
+			std::cout << "Age must be as digit: ";
 	}
 	throw 0;
 }
@@ -217,7 +260,7 @@ void findEmployeeByNameSurname() {
 			std::cout << "List is empty!" << std::endl;
 			return;
 		}
-		} catch (int e) {
+	} catch (int e) {
 		if (e == 0) {
 			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "No Match!" << std::endl;
@@ -233,18 +276,19 @@ void subMenu() {
 		switch (choice) {
 			case CHOICE_1:
 				findEmployeeByNameSurname();
-				break;
+				return;
 			case CHOICE_2:
 				deleteEmployee();
-				break;
+				return;
 			case CHOICE_3:
 				newEmployee();
-				break;
+				allEmployees();
+				return;
 			case CHOICE_4:
 				updateEmployee();
-				break;
+				return;
 			case CHOICE_0:
-				mainMenu();
+				return;
 			default:
 				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << " or " << CHOICE_0 << "!" << std::endl;
 		}
@@ -312,6 +356,7 @@ void readFiles() {
 		std::ofstream file("data");
 		getHelp();
 		std::cout << "This help is shown this time as it is initial run of programm. For showing help again type character \'" << CHOICE_H << "\' at MAIN MENU! Enyoj." << std::endl;
+		std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 	}
 	int age;
 	while (getline (file, line)) {

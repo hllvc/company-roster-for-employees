@@ -9,7 +9,10 @@ const char CHOICE_2 = '2';
 const char CHOICE_3 = '3';
 const char CHOICE_4 = '4';
 const char CHOICE_5 = '5';
+
 const char CHOICE_H = 'h';
+const char CHOICE_C = 'C';
+
 const char CHOICE_0 = '0';
 
 const int SIGN_AROUND_NAME_NUMBER = 5;
@@ -37,6 +40,7 @@ void updateEmployee();
 void searchMenu();
 void subMenu();
 void getHelp();
+void resetAllSettings();
 // additional functions
 void printRoster(std::vector<Employee>, std::ostream&);
 std::vector<Employee> findEmployee();
@@ -49,3 +53,4 @@ roster_it findByJmbg();
 std::vector<std::string> employeeInput(const int&);
 std::string ageInput();
 char choiceInput();
+char yesNoChoice();

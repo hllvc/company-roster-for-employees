@@ -32,7 +32,7 @@ std::vector<Employee> Roster::findEmployees(std::vector<std::string>& split_inpu
 	if (split_input.size() > 1) {
 		for (auto it = by_names.begin(); it != by_names.end(); std::advance(it, 1))
 			for (auto it_2 = by_surnames.begin(); it_2 != by_surnames.end(); std::advance(it_2, 1))
-				if (it->getName() == it_2->getName() && it->getSurname() == it_2->getSurname())
+				if (it->getName() == it_2->getName() && it->getSurname() == it_2->getSurname() && it->getJmbg() == it_2->getJmbg())
 					result.push_back(*it);
 		return result;
 	} else {
@@ -81,4 +81,8 @@ void Roster::updatePerson(roster_it& it, std::vector<std::string>& input) {
 
 roster_it Roster::getLast() {
 	return std::prev(this->roster.end());
+}
+
+void Roster::clearRoster() {
+	this->roster.clear();
 }
