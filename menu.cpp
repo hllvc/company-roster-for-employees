@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -26,6 +27,33 @@ void printMainMenu() {
 	std::cout << "\n " << CHOICE_H << ") Help\n";
 	std::cout << "\n " << CHOICE_0 << ") Exit\n" << std::endl;
 	std::cout << "Choice: ";
+}
+
+void mainMenu() {
+	char choice;
+	while (true) {
+		printMainMenu();
+		choice = choiceInput();
+		switch (choice) {
+			case CHOICE_1:
+				newEmployee();
+				break;
+			case CHOICE_2:
+				allEmployees();
+				break;
+			case CHOICE_3:
+				findEmployeeByNameSurname();
+				break;
+			case CHOICE_H:
+				getHelp();
+				break;
+			case CHOICE_0:
+				writeFiles();
+				exit(0);
+			default:
+				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << ", " << CHOICE_4 << ", " << CHOICE_5 << " or " << CHOICE_0 << "!" << std::endl;
+		}
+	}
 }
 
 char choiceInput() {
@@ -136,12 +164,12 @@ void allEmployees() {
 	if (!roster.empty()) {
 		printRoster(roster, std::cout);
 		subMenu();
-		allEmployees();
 	} else {
 		std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 		std::cout << "Roster is empty!" << std::endl;
 		return;
 	}
+	return;
 }
 
 void printRoster(std::vector<Employee> roster, std::ostream& output) {
@@ -216,7 +244,7 @@ void subMenu() {
 				updateEmployee();
 				break;
 			case CHOICE_0:
-				return;
+				mainMenu();
 			default:
 				std::cout << "Wrong input!" << std::endl << "You can either enter " << CHOICE_1 << ", " << CHOICE_2 << ", " << CHOICE_3 << " or " << CHOICE_0 << "!" << std::endl;
 		}
@@ -272,6 +300,7 @@ void writeFiles() {
 	std::ofstream file("data");
 	std::vector<Employee> roster = company.roster.getRoster();
 	printRoster(roster, file);
+	file.close();
 }
 
 void readFiles() {
@@ -305,6 +334,7 @@ void readFiles() {
 			company.roster.addToRoster(employee);
 		}
 	}
+	file.close();
 }
 
 void getHelp() {
@@ -312,4 +342,5 @@ void getHelp() {
 	std::string line;
 	while (getline (file, line))
 		std::cout << line << std::endl;
+	file.close();
 }

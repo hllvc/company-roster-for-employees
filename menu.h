@@ -28,6 +28,7 @@ struct Company {
 
 // main menu functions
 void printMainMenu();
+void mainMenu();
 void newEmployee();
 void allEmployees();
 void deleteEmployee();
