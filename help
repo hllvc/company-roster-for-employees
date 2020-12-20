@@ -1,11 +1,26 @@
- # -----------------------------------------------------------------------
+ # --------------------
  |
  |	C++ Project by 
  |	
- |	Navigate by provided character before ")" in any menu.
+ |	NAVIGATION THROUGH MENU:
+ |
+ |		* Navigate by provided character before ")" in any menu.
+ |		* '0' is either for exit or going back
+ |		* 'C' is for clearing Roster and 'h' for help
  |	 
  |	Some rules:
- |		JMBG must be exactly 13 character, can't contain letter, only digits,
- |		Your age can't be negative or over defined MAX_AGE
  |
- # -----------------------------------------------------------------------
+ |		* JMBG must be exactly 13 character, can't contain letter, only digits
+ |		* Your age can't be negative or over defined MAX_AGE
+ |		* While updating employee details character/digit '0' represents default setting
+ |			(only while updating you are able to set age as '0', but that means you don't want to change age)
+ |		* Department field can contain multiple words while Name and Surname only one
+ |		* You can't change your JMBG, if you would like to change delete old employee
+ |				and create new one with new JMBG
+ |		* You can clear Roster inside program with provided option
+ |			(be aware only capital letter 'Y' is for confirming clearing)
+ |		* Search employee option searches for all employees by provided Name or Surname,
+ |			if you provide both it searches employees that match and name and surname
+ |		* Only available option for deleting, updating employees is while you have listed ones
+ |			(that is done by inputing JMBG as identification number, if there are more with same name)
+ |

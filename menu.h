@@ -51,6 +51,7 @@ void writeFiles();
 void readFiles();
 roster_it findByJmbg();
 std::vector<std::string> employeeInput(const int&);
-std::string ageInput();
+std::string ageInput(const int&);
 char choiceInput();
 char yesNoChoice();
+std::string input();
