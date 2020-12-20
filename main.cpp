@@ -1,5 +1,4 @@
 #include <iostream>
-#include <ostream>
 #include <string>
 
 // #include <limits>
@@ -25,13 +24,7 @@ int main() {
 				allEmployees();
 				break;
 			case CHOICE_3:
-				deleteEmployee();
-				break;
-			case CHOICE_4:
 				findEmployeeByNameSurname();
-				break;
-			case CHOICE_5:
-				updateEmployee();
 				break;
 			case CHOICE_H:
 				getHelp();

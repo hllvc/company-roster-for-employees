@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -23,9 +22,7 @@ void printMainMenu() {
 	std::cout << "\n\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " MAIN MENU " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	std::cout << " " << CHOICE_1 << ") New Employee\n";
 	std::cout << " " << CHOICE_2 << ") All Employees\n";
-	std::cout << " " << CHOICE_3 << ") Delete Employee\n";
-	std::cout << " " << CHOICE_4 << ") Find Employee\n";
-	std::cout << " " << CHOICE_5 << ") Update Employee\n";
+	std::cout << " " << CHOICE_3 << ") Find Employee\n";
 	std::cout << "\n " << CHOICE_H << ") Help\n";
 	std::cout << "\n " << CHOICE_0 << ") Exit\n" << std::endl;
 	std::cout << "Choice: ";
@@ -68,6 +65,7 @@ void newEmployee() {
 std::vector<std::string> employeeInput(const int& value) {
 	std::string s_input;
 	std::vector<std::string> input;
+	std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 	std::cout << "Name: ";
 	std::cin >> s_input;
 	input.push_back(s_input);
@@ -94,6 +92,7 @@ std::vector<std::string> employeeInput(const int& value) {
 	std::cin.sync();
 	// std::cin >> s_input;
 	input.push_back(s_input);
+	std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 	return input;
 }
 
@@ -132,12 +131,14 @@ bool is_number(const std::string& s) {
 }
 
 void allEmployees() {
-	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " ALL EMPLOYEES " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << std::endl;
+	std::cout << "\n\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " ALL EMPLOYEES " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << std::endl;
 	std::vector<Employee> roster = company.roster.getRoster();
 	if (!roster.empty()) {
 		printRoster(roster, std::cout);
 		subMenu();
+		allEmployees();
 	} else {
+		std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 		std::cout << "Roster is empty!" << std::endl;
 		return;
 	}
@@ -168,8 +169,10 @@ roster_it findByJmbg() {
 	try {
 		it = company.roster.findEmployee(jmbg);
 	} catch (int e) {
-		if (e == 0)
+		if (e == 0) {
+			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "No Match!" << std::endl;
+		}
 	}
 	return it;
 }
@@ -182,12 +185,15 @@ void findEmployeeByNameSurname() {
 			printRoster(list, std::cout);
 			subMenu();
 		} else {
+			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "List is empty!" << std::endl;
 			return;
 		}
 		} catch (int e) {
-		if (e == 0)
+		if (e == 0) {
+			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "No Match!" << std::endl;
+		}
 	}
 }
 
@@ -198,13 +204,17 @@ void subMenu() {
 		choice = choiceInput();
 		switch (choice) {
 			case CHOICE_1:
-				deleteEmployee();
+				findEmployeeByNameSurname();
 				break;
 			case CHOICE_2:
-				updateEmployee();
+				deleteEmployee();
 				break;
 			case CHOICE_3:
 				newEmployee();
+				break;
+			case CHOICE_4:
+				updateEmployee();
+				break;
 			case CHOICE_0:
 				return;
 			default:
@@ -215,9 +225,11 @@ void subMenu() {
 }
 
 void searchMenu() {
-	std::cout << " " << CHOICE_1 << ") Delete\n";
-	std::cout << " " << CHOICE_2 << ") Update\n";
+	std::cout << "\nOptions:\n\n";
+	std::cout << " " << CHOICE_1 << ") Search\n";
+	std::cout << " " << CHOICE_2 << ") Delete\n";
 	std::cout << " " << CHOICE_3 << ") New\n";
+	std::cout << " " << CHOICE_4 << ") Update\n";
 	std::cout << "\n " << CHOICE_0 << ") Back\n";
 	std::cout << "\nChoice: ";
 }
@@ -226,7 +238,7 @@ std::vector<Employee> findEmployee() {
 	std::string input;
 	std::vector<std::string> split_input;
 	std::vector<Employee> list;
-	std::cout << "\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " FIND EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
+	std::cout << "\n\t" << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << " FIND EMPLOYEE " << std::string(SIGN_AROUND_NAME_NUMBER, SIGN_AROUND_NAME) << "\n\n";
 	std::cout << "Find by Name or Surname or both: ";
 	std::cin.ignore();
 	std::getline(std::cin, input, '\n');
@@ -257,7 +269,7 @@ void updateEmployee() {
 }
 
 void writeFiles() {
-	std::ofstream file("roster.dat");
+	std::ofstream file("data");
 	std::vector<Employee> roster = company.roster.getRoster();
 	printRoster(roster, file);
 }
@@ -266,9 +278,9 @@ void readFiles() {
 	Employee employee;
 	std::vector<std::string> split_input;
 	std::string line;
-	std::ifstream file("roster.dat");
+	std::ifstream file("data");
 	if (file.fail()) {
-		std::ofstream file("roster.dat");
+		std::ofstream file("data");
 		getHelp();
 		std::cout << "This help is shown this time as it is initial run of programm. For showing help again type character \'" << CHOICE_H << "\' at MAIN MENU! Enyoj." << std::endl;
 	}
@@ -296,7 +308,7 @@ void readFiles() {
 }
 
 void getHelp() {
-	std::ifstream file("README.md");
+	std::ifstream file("help");
 	std::string line;
 	while (getline (file, line))
 		std::cout << line << std::endl;

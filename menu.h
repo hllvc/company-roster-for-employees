@@ -1,6 +1,5 @@
 #include <vector>
 #include <fstream>
-#include <ostream>
 
 #include "employee.h"
 #include "roster.h"
