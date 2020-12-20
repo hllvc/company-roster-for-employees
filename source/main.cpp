@@ -4,9 +4,9 @@
 // #include <limits>
 // #include <ios>
 
-#include "employee.h"
-#include "roster.h"
-#include "menu.h"
+#include "../header/employee.h"
+#include "../header/roster.h"
+#include "../header/menu.h"
 
 int main() {
 	readFiles();

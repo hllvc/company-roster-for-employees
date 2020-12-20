@@ -1,3 +1,6 @@
+#ifndef _MENU_H_
+#define _MENU_H_
+
 #include <vector>
 #include <fstream>
 
@@ -55,3 +58,5 @@ std::string ageInput(const int&);
 char choiceInput();
 char yesNoChoice();
 std::string input();
+
+#endif // _MENU_H_
