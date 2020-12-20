@@ -365,7 +365,7 @@ void updateEmployee() {
 }
 
 void writeFiles() {
-	std::ofstream file("data");
+	std::ofstream file("../data");
 	std::vector<Employee> roster = company.roster.getRoster();
 	printRoster(roster, file);
 	file.close();
@@ -375,7 +375,7 @@ void readFiles() {
 	Employee employee;
 	std::vector<std::string> split_input;
 	std::string line;
-	std::ifstream file("data");
+	std::ifstream file("../data");
 	if (file.fail()) {
 		getHelp();
 		std::cout << " |		This help is shown this time as it is initial run of program." << std::endl;
@@ -393,11 +393,12 @@ void readFiles() {
 						std::cout << "Some error occured! Try again!" << std::endl;
 				}
 				if (choice == '1') {
-					std::ofstream file("data");
+					std::ofstream file("../data");
+					file.close();
 					return;
 				}
 				else if (choice == 'R') {
-					std::ifstream terms("terms");
+					std::ifstream terms("../terms");
 					std::string terms_line;
 					std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 					while (std::getline(terms, terms_line))
@@ -433,7 +434,7 @@ void readFiles() {
 }
 
 void getHelp() {
-	std::ifstream file("help");
+	std::ifstream file("../help");
 	std::string line;
 	while (getline (file, line))
 		std::cout << line << std::endl;
