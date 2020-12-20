@@ -43,7 +43,7 @@ void updateEmployee();
 void searchMenu();
 void subMenu();
 void getHelp();
-void resetAllSettings();
+void deleteRoster();
 // additional functions
 void printRoster(std::vector<Employee>, std::ostream&);
 std::vector<Employee> findEmployee();

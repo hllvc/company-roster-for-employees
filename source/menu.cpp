@@ -31,7 +31,7 @@ void mainMenu() {
 		printMainMenu();
 		try {
 			choice = choiceInput();
-		} catch (int e) {
+		} catch (int& e) {
 			if (e == 0)
 				std::cout << "Some error occured! Try again!" << std::endl;
 		}
@@ -47,7 +47,7 @@ void mainMenu() {
 				findEmployeeByNameSurname();
 				break;
 			case CHOICE_C:
-				resetAllSettings();
+				deleteRoster();
 				break;
 			case CHOICE_H:
 				getHelp();
@@ -62,13 +62,12 @@ void mainMenu() {
 	}
 }
 
-void resetAllSettings() {
-	std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
+void deleteRoster() {
 	std::cout << "Are you sure to continue? (Y/n): ";
 	char choice;
 	try {
 		choice = yesNoChoice();
-	} catch (int e) {
+	} catch (int& e) {
 		if (e == 0)
 			std::cout << "Some error occured! Try again!" << std::endl;
 	}
@@ -134,7 +133,6 @@ std::string input() {
 std::vector<std::string> employeeInput(const int& value) {
 	std::string s_input;
 	std::vector<std::string> v_input;
-	std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 	std::cout << "Name: ";
 	s_input = input();
 	v_input.push_back(s_input);
@@ -147,7 +145,7 @@ std::vector<std::string> employeeInput(const int& value) {
 		s_input = ageInput(value);
 		v_input.push_back(s_input);
 
-	} catch (int e) {
+	} catch (int& e) {
 		if (e == 0)
 			std::cout << "Some error occured. Try again!" << std::endl;
 	}
@@ -156,7 +154,7 @@ std::vector<std::string> employeeInput(const int& value) {
 		try {
 			s_input = jmbgInput();	
 			v_input.push_back(s_input);
-		} catch (int e) {
+		} catch (int& e) {
 			if (e == 0)
 				std::cout << "Some error occured. Try again!" << std::endl;
 		}
@@ -192,7 +190,7 @@ std::string ageInput(const int& value) {
 	std::string input;
 	int age;
 	while (std::cin >> input){
-		if (is_number(input)) {
+		if (is_number(input) && !(input.size() > 3)) {
 			age = std::stoi(input);
 			if (value == 0 && age == 0)
 				return input;
@@ -206,7 +204,7 @@ std::string ageInput(const int& value) {
 			if (input.empty())
 				return input;
 			else
-				std::cout << "Age must be as digit: ";
+				std::cout << "Age must be digit/Can't be huge number";
 	}
 	throw 0;
 }
@@ -255,7 +253,7 @@ roster_it findByJmbg() {
 	roster_it it;
 	try {
 		it = company.roster.findEmployee(jmbg);
-	} catch (int e) {
+	} catch (int& e) {
 		if (e == 0) {
 			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "No Match!" << std::endl;
@@ -276,7 +274,7 @@ void findEmployeeByNameSurname() {
 			std::cout << "List is empty!" << std::endl;
 			return;
 		}
-	} catch (int e) {
+	} catch (int& e) {
 		if (e == 0) {
 			std::cout << std::string(LINE_LENGTH, LINE_SIGN) << std::endl;
 			std::cout << "No Match!" << std::endl;
@@ -291,7 +289,7 @@ void subMenu() {
 		searchMenu();
 		try {
 			choice = choiceInput();
-		} catch (int e) {
+		} catch (int& e) {
 			if (e == 0)
 				std::cout << "Some error occured! Try again!" << std::endl;
 		}
@@ -344,7 +342,7 @@ std::vector<Employee> findEmployee() {
 	split_input = splitInputBySpace(input);
 	try {
 		list = company.roster.findEmployees(split_input);
-	} catch (int e) {
+	} catch (int& e) {
 		if (e == 0)
 			throw 0;
 	}
@@ -388,7 +386,7 @@ void readFiles() {
 				std::cout << "\nEnter 1 for accepting terms, 0 for exit and capital R for reading terms: ";
 				try {
 					choice = choiceInput();
-				} catch (int e) {
+				} catch (int& e) {
 					if (e == 0)
 						std::cout << "Some error occured! Try again!" << std::endl;
 				}
